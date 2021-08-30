@@ -24,7 +24,7 @@ import com.uns.ac.rs.ues.Email.Client.service.AccountService;
 import com.uns.ac.rs.ues.Email.Client.service.UserService;
 
 @RestController
-@RequestMapping(value="/api")
+@RequestMapping(value="/api/accounts")
 public class AccountController {
 
 	@Autowired
@@ -34,7 +34,7 @@ public class AccountController {
 	private UserService userService; 
 	
 	@GetMapping
-	@RequestMapping(value="/accounts/{username}")
+	@RequestMapping(value="/{username}")
 	public ResponseEntity<List<AccountDTO>> getAccount(@PathVariable("username") String username) {
 		User user = userService.findByUsername(username);
 		
