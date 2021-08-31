@@ -2,6 +2,7 @@ package com.uns.ac.rs.ues.Email.Client.dto;
 
 import java.util.GregorianCalendar;
 
+import com.uns.ac.rs.ues.Email.Client.model.MyMessage;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +16,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MyMessageDTO {
+
+	public MyMessageDTO(MyMessage m) {
+		// TODO Auto-generated constructor stub
+	}
 
 	private long id;
 	

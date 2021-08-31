@@ -3,7 +3,9 @@ package com.uns.ac.rs.ues.Email.Client.service;
 import java.util.List;
 
 import com.uns.ac.rs.ues.Email.Client.dto.AccountDTO;
+import com.uns.ac.rs.ues.Email.Client.dto.MyMessageDTO;
 import com.uns.ac.rs.ues.Email.Client.model.Account;
+import com.uns.ac.rs.ues.Email.Client.model.MyMessage;
 import com.uns.ac.rs.ues.Email.Client.model.User;
 
 public interface AccountService {
@@ -17,5 +19,6 @@ public interface AccountService {
 	boolean changeState(AccountDTO accountDTO);
 
 	boolean delete(Long id);
+
 
 }
