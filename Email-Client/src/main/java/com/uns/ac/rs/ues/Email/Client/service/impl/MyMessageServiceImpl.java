@@ -3,6 +3,7 @@ package com.uns.ac.rs.ues.Email.Client.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.uns.ac.rs.ues.Email.Client.dto.MyMessageDTO;
 import com.uns.ac.rs.ues.Email.Client.model.Account;
@@ -11,16 +12,13 @@ import com.uns.ac.rs.ues.Email.Client.model.User;
 import com.uns.ac.rs.ues.Email.Client.repository.MyMessageRepository;
 import com.uns.ac.rs.ues.Email.Client.service.MyMessageService;
 
+@Service
 public class MyMessageServiceImpl implements MyMessageService{
 	
 	@Autowired
 	MyMessageRepository messageRepository;
 
-	@Override
-	public List<MyMessage> findByUser(User user) {
-		return messageRepository.findByUser(user);
-	}
-
+	
 	@Override
 	public MyMessage findBySender(String from) {
 		MyMessage message = messageRepository.findByFrom(from);
@@ -67,6 +65,28 @@ public class MyMessageServiceImpl implements MyMessageService{
 	
 	private MyMessage findById(Long id) {
 		return messageRepository.findById(id).orElseThrow();
+	}
+
+	@Override
+	public List<MyMessage> findByAccount(Account account) {
+		return messageRepository.findByAccount(account);
+	}
+
+	@Override
+	public void save(MyMessage message) {
+		MyMessage m = null; 
+		try {
+			m = messageRepository.save(message); 
+			//addNewMessage(m);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private void addNewMessage(MyMessage m) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

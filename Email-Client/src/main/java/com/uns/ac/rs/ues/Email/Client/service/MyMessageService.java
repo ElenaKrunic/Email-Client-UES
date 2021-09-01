@@ -2,14 +2,14 @@ package com.uns.ac.rs.ues.Email.Client.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.uns.ac.rs.ues.Email.Client.dto.MyMessageDTO;
 import com.uns.ac.rs.ues.Email.Client.model.Account;
 import com.uns.ac.rs.ues.Email.Client.model.MyMessage;
 import com.uns.ac.rs.ues.Email.Client.model.User;
 
 public interface MyMessageService {
-
-	List<MyMessage> findByUser(User user);
 
 	MyMessage findBySender(String from);
 
@@ -18,5 +18,9 @@ public interface MyMessageService {
 	boolean changeState(MyMessageDTO messageDTO);
 
 	boolean delete(Long id);
+
+	List<MyMessage> findByAccount(Account account);
+
+	void save(MyMessage message);
 
 }

@@ -3,6 +3,7 @@ package com.uns.ac.rs.ues.Email.Client.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.uns.ac.rs.ues.Email.Client.dto.AccountDTO;
 import com.uns.ac.rs.ues.Email.Client.model.Account;
@@ -10,6 +11,7 @@ import com.uns.ac.rs.ues.Email.Client.model.User;
 import com.uns.ac.rs.ues.Email.Client.repository.AccountRepository;
 import com.uns.ac.rs.ues.Email.Client.service.AccountService;
 
+@Service
 public class AccountServiceImpl implements AccountService {
 
 	@Autowired
@@ -65,6 +67,12 @@ public class AccountServiceImpl implements AccountService {
 
 	private Account findById(Long id) {
 		return accountRepository.findById(id).orElseThrow();
+	}
+
+	@Override
+	public List<Account> findAllByUserId(Long korisnikID) {
+		List<Account> accounts = accountRepository.findByUserId(korisnikID);
+		return accounts;
 	}
 
 }

@@ -19,15 +19,19 @@ import com.uns.ac.rs.ues.Email.Client.model.User;
 import com.uns.ac.rs.ues.Email.Client.service.UserService;
 
 @RestController
-@RequestMapping(value = "/api/users")
+@RequestMapping(value = "api/users")
 public class UserController {
 
 	@Autowired
 	UserService userService; 
 	
+	static Long korisnikID; 
+	/*
 	@PostMapping(consumes = "application/json", value= "/login")
 	public ResponseEntity<UserDTO> login (@RequestBody UserDTO userDTO) {
 		User user = userService.findByUsername(userDTO.getUsername()); 
+		
+		System.out.println("User ")
 		
 		if(user.getPassword().equals(userDTO.getPassword())) {
 			return new ResponseEntity<UserDTO>(new UserDTO(user), HttpStatus.OK);
@@ -35,6 +39,32 @@ public class UserController {
 		
 		return ResponseEntity.notFound().build();
 	}
+	*/
+	
+	@PostMapping("/login")
+	public ResponseEntity<?> ulogujKorisnika(@RequestBody UserDTO userDTO) {
+		
+		User existsUser = userService.findByUsernameAndPassword(userDTO.getUsername(), userDTO.getPassword());
+		
+		System.out.println("Korisnik koji se loguje na sistem ------------------------------>\n" + existsUser.getUsername() + " " + existsUser.getPassword());
+		korisnikID = existsUser.getId();
+		return new ResponseEntity<UserDTO>(new UserDTO(existsUser),HttpStatus.OK);
+	}
+	
+	@PostMapping(consumes="application/json")
+	public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO userDTO) {
+		User user = new User(); 
+		user.setFirstname(userDTO.getFirstname());
+		user.setLastname(userDTO.getLastname());
+		user.setPassword(userDTO.getPassword());
+		user.setUsername(userDTO.getUsername());
+		
+		userService.save(userDTO); 
+		
+		return new ResponseEntity<UserDTO>(new UserDTO(user), HttpStatus.CREATED); 
+	}	
+	
+	
 	
 	@PostMapping(consumes = "application/json", value = "/register")
 	public ResponseEntity<UserDTO> registerUser(@RequestBody UserDTO userDTO, UriComponentsBuilder builder) {
@@ -75,4 +105,6 @@ public class UserController {
 		
 		return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
 	}
+	
+	
 }

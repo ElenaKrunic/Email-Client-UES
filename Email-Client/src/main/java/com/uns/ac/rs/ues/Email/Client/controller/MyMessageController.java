@@ -42,9 +42,9 @@ public class MyMessageController {
 	@GetMapping
 	@RequestMapping(value="/{username}")
 	public ResponseEntity<List<MyMessageDTO>> getMessage(@PathVariable("username") String username) {
-		User user = userService.findByUsername(username);
+		Account account = accountService.findByUsername(username);
 		
-		List<MyMessage> messages = messageService.findByUser(user);
+		List<MyMessage> messages = messageService.findByAccount(account);
 		List<MyMessageDTO> messagesDTO = new ArrayList<MyMessageDTO>();
 		
 		for(MyMessage m: messages) {

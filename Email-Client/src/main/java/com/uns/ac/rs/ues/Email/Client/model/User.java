@@ -48,4 +48,12 @@ public class User {
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="user")
 	private List<Contact> contacts = new ArrayList<Contact>();
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", firstname=" + firstname
+				+ ", lastname=" + lastname + ", active=" + active + "]";
+	}
+	
+	
 }

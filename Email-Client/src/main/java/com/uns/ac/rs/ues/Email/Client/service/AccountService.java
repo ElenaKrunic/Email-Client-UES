@@ -2,6 +2,8 @@ package com.uns.ac.rs.ues.Email.Client.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.uns.ac.rs.ues.Email.Client.dto.AccountDTO;
 import com.uns.ac.rs.ues.Email.Client.dto.MyMessageDTO;
 import com.uns.ac.rs.ues.Email.Client.model.Account;
@@ -19,6 +21,8 @@ public interface AccountService {
 	boolean changeState(AccountDTO accountDTO);
 
 	boolean delete(Long id);
+
+	List<Account> findAllByUserId(Long id);
 
 
 }

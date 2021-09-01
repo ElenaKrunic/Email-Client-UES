@@ -20,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.uns.ac.rs.ues.Email.Client.dto.AccountDTO;
 import com.uns.ac.rs.ues.Email.Client.model.Account;
 import com.uns.ac.rs.ues.Email.Client.model.User;
+import com.uns.ac.rs.ues.Email.Client.repository.AccountRepository;
 import com.uns.ac.rs.ues.Email.Client.service.AccountService;
 import com.uns.ac.rs.ues.Email.Client.service.UserService;
 
@@ -28,10 +29,13 @@ import com.uns.ac.rs.ues.Email.Client.service.UserService;
 public class AccountController {
 
 	@Autowired
-	private AccountService accountService; 
+	AccountService accountService; 
 	
 	@Autowired
-	private UserService userService; 
+	UserService userService; 
+	
+	@Autowired
+	AccountRepository accountRepository; 
 	
 	@GetMapping
 	@RequestMapping(value="/{username}")
@@ -79,11 +83,46 @@ public class AccountController {
 	
 	@DeleteMapping(value="/{id}")
 	public ResponseEntity<Void> deleteMessageFromAccount(@PathVariable("id") Long id) {
-		boolean account = accountService.delete(id);
-		if(account) {
-			return ResponseEntity.noContent().build();
-		}else {
-			return ResponseEntity.notFound().build();
+		
+		Account account = accountRepository.getById(id); 
+		
+		if(account == null) {
+			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+		} else {
+			accountRepository.deleteById(id);
+			return new ResponseEntity<Void>(HttpStatus.OK);
 		}
+	}
+	
+	/*
+	@GetMapping(value = "/getAccountsForUser/{id}")
+	public ResponseEntity<List<AccountDTO>> getAllAccountsForUser(@PathVariable("id") Long id) {
+		//List<Account> accounts = accountService.findAllByUserId(UserController.korisnikID);
+		List<Account> accounts =  accountService.findAllByUserId(id);
+		System.out.println("Nalozi za korisnika su =====> \n" + accounts);
+		List<AccountDTO> dtoAccounts = new ArrayList<AccountDTO>(); 
+		if(accounts == null) {
+			return new ResponseEntity<List<AccountDTO>>(HttpStatus.BAD_REQUEST);
+		}
+		for(Account account : accounts) {
+			AccountDTO dto = new AccountDTO(account); 
+			dtoAccounts.add(dto);
+		}
+		return new ResponseEntity<List<AccountDTO>>(dtoAccounts, HttpStatus.OK);
+	}
+	*/
+	
+	@GetMapping("/getAccountsForUser")
+	public ResponseEntity<List<AccountDTO>> getAllAccountsForUser() {
+		List<Account> accounts = accountService.findAllByUserId(UserController.korisnikID);
+		List<AccountDTO> dtoAccounts = new ArrayList<AccountDTO>(); 
+		if(accounts == null) {
+			return new ResponseEntity<List<AccountDTO>>(HttpStatus.BAD_REQUEST);
+		}
+		for(Account account : accounts) {
+			AccountDTO dto = new AccountDTO(account); 
+			dtoAccounts.add(dto);
+		}
+		return new ResponseEntity<List<AccountDTO>>(dtoAccounts, HttpStatus.OK);
 	}
 }

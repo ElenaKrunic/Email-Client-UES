@@ -52,7 +52,7 @@ public class Account {
 	
 	private String displayName; 
 	
-	private Timestamp lastSyncTime; 
+	//private Timestamp lastSyncTime; 
 	
 	private boolean active=true; 
 	
